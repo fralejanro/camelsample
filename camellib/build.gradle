@@ -1,0 +1,48 @@
+buildscript {
+    ext{
+        springBootVersion = '3.0.2'
+        camelVersion = '4.0.0-M1'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+version '1.0-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_17
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: springBootVersion
+    compileOnly group: 'org.apache.camel.springboot', name: 'camel-spring-boot-starter', version: camelVersion
+    compileOnly group: 'org.apache.camel.springboot', name: 'camel-jackson-starter', version: camelVersion
+    compileOnly group: 'org.apache.camel.springboot', name: 'camel-http-starter', version: camelVersion
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    //useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication){
+            groupId = 'com.demo'
+            artifactId = 'camellib'
+            version = '1.0-SNAPSHOT'
+            from components.java
+        }
+    }
+}
